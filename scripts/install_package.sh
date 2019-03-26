@@ -13,9 +13,8 @@ echo "force-unsafe-io" > /etc/dpkg/dpkg.cfg.d/02apt-speedup
 # we don't need and apt cache in a container
 echo "Acquire::http {No-Cache=True;};" > /etc/apt/apt.conf.d/no-cache
 
-DEBIAN_FRONTEND=noninteractive
-  dpkg-reconfigure -f noninteractive tzdata \
-  && apt-get update -q \
+export DEBIAN_FRONTEND=noninteractive
+apt-get update -q \
   && apt-get upgrade -y -q \
   && apt-get install -y -q curl gnupg2 ca-certificates lsb-release build-essential git wget --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
